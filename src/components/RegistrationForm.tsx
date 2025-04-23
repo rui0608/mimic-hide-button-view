@@ -1,12 +1,37 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import CocopitaLinkDialog from "./CocopitaLinkDialog";
+import { toast } from "@/hooks/use-toast";
 
 const RegistrationForm = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  // フォーム送信時のデフォルト挙動停止＋ダイアログを開く
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // ここで、本来はアカウント確認や登録処理など
+    setDialogOpen(true);
+  };
+
+  // 「はい」クリック時の処理
+  const handleLinkYes = () => {
+    setDialogOpen(false);
+    toast({
+      title: "COCOPiTAと連動しました",
+    });
+    // ここで連動API呼び出しなど
+  };
+
+  // 「いいえ」クリック時の処理
+  const handleLinkNo = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <div className="max-w-2xl mx-auto py-6 px-4">
       <div className="text-center mb-8">
@@ -24,7 +49,7 @@ const RegistrationForm = () => {
         </Button>
       </div> */}
       
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={handleSubmit}>
         {/* Name fields */}
         <div className="grid grid-cols-2 gap-4 mt-2">
           <div>
@@ -217,12 +242,20 @@ const RegistrationForm = () => {
 
         {/* Action buttons */}
         <div className="flex justify-center space-x-4 pt-4">
-          <Button variant="outline" className="w-40 rounded-full">キャンセル</Button>
-          <Button className="w-40 rounded-full bg-blue-500 hover:bg-blue-600">次へ</Button>
+          <Button variant="outline" className="w-40 rounded-full" type="button">キャンセル</Button>
+          <Button className="w-40 rounded-full bg-blue-500 hover:bg-blue-600" type="submit">次へ</Button>
         </div>
       </form>
+
+      {/* COCOPiTA連動確認ダイアログ */}
+      <CocopitaLinkDialog
+        open={dialogOpen}
+        onYes={handleLinkYes}
+        onNo={handleLinkNo}
+      />
     </div>
   );
 };
 
 export default RegistrationForm;
+
