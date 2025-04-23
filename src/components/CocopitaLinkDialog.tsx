@@ -2,7 +2,6 @@
 import React from "react";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -27,8 +26,15 @@ const CocopitaLinkDialog: React.FC<CocopitaLinkDialogProps> = ({ open, onYes, on
           </DialogTitle>
         </DialogHeader>
         <DialogFooter className="justify-center gap-4 mt-4">
-          <Button className="w-32 rounded-full" onClick={onYes}>はい</Button>
-          <Button variant="outline" className="w-32 rounded-full" onClick={onNo}>いいえ</Button>
+          <Button 
+            className="w-32 rounded-full bg-blue-500 hover:bg-blue-600 text-white" 
+            onClick={onYes}
+          >
+            はい
+          </Button>
+          <Button variant="outline" className="w-32 rounded-full" onClick={onNo}>
+            いいえ
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
